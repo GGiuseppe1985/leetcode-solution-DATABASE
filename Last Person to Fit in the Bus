@@ -1,0 +1,9 @@
+# Write your MySQL query statement below
+with cs as (
+  SELECT *,
+  SUM(weight) OVER(order by turn) AS cur_sum
+  FROM Queue
+)
+SELECT person_name 
+FROM cs
+WHERE cur_sum = (SELECT max(cur_sum) FROM cs WHERE cur_sum <= 1000) 
